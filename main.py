@@ -33,7 +33,7 @@ def scrap_truckscout24(url):
             truck_href = truck_card.find(
                 class_='ls-titles'
             ).find('a').get('href')
-            absolut_href = 'https://www.truckscout24.de/' + truck_href
+            absolut_href = 'https://www.truckscout24.de' + truck_href
 
             truck_id = int(truck_href.split('/')[-2])
 
@@ -65,9 +65,9 @@ def scrap_truckscout24(url):
             else:
                 truck_color = ''
             if 'Leistung' in color_and_power:
-                truck_power = color_and_power.split(
+                truck_power = int(color_and_power.split(
                     'Leistung'
-                )[1].split('kW')[0].strip()
+                )[1].split('kW')[0].strip())
             else:
                 truck_power = 0
 
