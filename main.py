@@ -12,7 +12,8 @@ from webdriver_manager.firefox import GeckoDriverManager
 
 
 def scrap_truckscout24(url):
-    result = []
+    ads = []
+    result = {}
 
     driver = webdriver.Firefox(
         service=FirefoxService(GeckoDriverManager().install()))
@@ -96,7 +97,7 @@ def scrap_truckscout24(url):
                 urllib.request.urlretrieve(url, f"data/{truck_id}/{img_name}")
                 i += 1
 
-            result.append(truck)
+            ads.append(truck)
 
             element = driver.find_element(By.CLASS_NAME, 'next-page')
             if element.find_elements(By.CLASS_NAME, 'disabled'):
@@ -104,6 +105,7 @@ def scrap_truckscout24(url):
             element.click()
             time.sleep(5)
 
+        result['ads'] = ads
         with open('data/data.json', 'w', encoding="utf-8") as file:
             json.dump(result, file, indent=4, ensure_ascii=False)
 
